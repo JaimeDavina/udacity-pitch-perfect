@@ -14,7 +14,6 @@
 		467609E71AB13F28001FA439 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 467609E51AB13F28001FA439 /* LaunchScreen.xib */; };
 		467609F31AB13F28001FA439 /* Pitch_PerfectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467609F21AB13F28001FA439 /* Pitch_PerfectTests.swift */; };
 		467609FD1AB13F4F001FA439 /* PlaySoundsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467609FC1AB13F4F001FA439 /* PlaySoundsViewController.swift */; };
-		46760A001ABDC6C6001FA439 /* yourcrazy.wav in Resources */ = {isa = PBXBuildFile; fileRef = 467609FF1ABDC6C6001FA439 /* yourcrazy.wav */; };
 		46760A031AC1923E001FA439 /* AudioRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46760A021AC1923E001FA439 /* AudioRecording.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +39,6 @@
 		467609F11AB13F28001FA439 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		467609F21AB13F28001FA439 /* Pitch_PerfectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pitch_PerfectTests.swift; sourceTree = "<group>"; };
 		467609FC1AB13F4F001FA439 /* PlaySoundsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaySoundsViewController.swift; sourceTree = "<group>"; };
-		467609FF1ABDC6C6001FA439 /* yourcrazy.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = yourcrazy.wav; sourceTree = "<group>"; };
 		46760A021AC1923E001FA439 /* AudioRecording.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecording.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				46760A011AC19206001FA439 /* Models */,
-				467609FF1ABDC6C6001FA439 /* yourcrazy.wav */,
 				467609FE1AB13F5B001FA439 /* Controllers */,
 				467609DC1AB13F28001FA439 /* AppDelegate.swift */,
 				467609E01AB13F28001FA439 /* Main.storyboard */,
@@ -218,7 +215,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				467609E21AB13F28001FA439 /* Main.storyboard in Resources */,
-				46760A001ABDC6C6001FA439 /* yourcrazy.wav in Resources */,
 				467609E71AB13F28001FA439 /* LaunchScreen.xib in Resources */,
 				467609E41AB13F28001FA439 /* Images.xcassets in Resources */,
 			);
@@ -435,6 +431,7 @@
 				467609F81AB13F28001FA439 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		467609F91AB13F28001FA439 /* Build configuration list for PBXNativeTarget "Pitch PerfectTests" */ = {
 			isa = XCConfigurationList;
@@ -443,6 +440,7 @@
 				467609FB1AB13F28001FA439 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
