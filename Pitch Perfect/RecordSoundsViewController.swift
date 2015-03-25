@@ -13,54 +13,64 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
 
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var recordLabel: UILabel!
     
     var audioRecorder: AVAudioRecorder!
-    let fileName = "pitch-perfect-recording"
-    var recordingURL: NSURL!
-    
+    var audioRecording: AudioRecording!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        recordingURL = NSURL(fileURLWithPath: fileName)
+        recordButton.enabled = true
+        audioRecording = AudioRecording()
+    }
+    private func setupRecordingSession() {
+        let session = AVAudioSession.sharedInstance()
+        session.setCategory(AVAudioSessionCategoryPlayAndRecord, error: nil)
+        session.setActive(true, error: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
         recordButton.enabled = true
         stopButton.hidden = true
+        recordLabel.hidden = true
     }
     
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     @IBAction func didPressRecord(sender: UIButton) {
-        recordButton.enabled = false
-        stopButton.hidden = false
         
-        if AVAudioSession.sharedInstance().recordPermission() != AVAudioSessionRecordPermission.Granted {
+        let session = AVAudioSession.sharedInstance()
+        if session.respondsToSelector("requestRecordPermission") && session.recordPermission() != AVAudioSessionRecordPermission.Granted {
             AVAudioSession.sharedInstance().requestRecordPermission() { (granted) in
-                // don't do anything
+                if granted {
+                    self.setupRecordingSession()
+                    self.startRecording()
+                }
             }
+
         } else {
-            var settings = [
-                AVFormatIDKey: kAudioFormatAppleLossless,
-                AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
-                AVEncoderBitRateKey : 320000,
-                AVNumberOfChannelsKey: 2,
-                AVSampleRateKey : 44100.0
-            ]
-            var error: NSErrorPointer!
-            audioRecorder = AVAudioRecorder(URL: recordingURL, settings: settings, error: error)
             
-            if error == nil {
-                audioRecorder.delegate = self
-                audioRecorder.prepareToRecord()
-            }
+            self.setupRecordingSession()
+            self.startRecording()
         }
+    
+    }
+    
+    private func startRecording() {
+        audioRecorder = AVAudioRecorder(URL: audioRecording.fileURL, settings: nil, error: nil)
+        
+        audioRecorder.delegate = self
+        audioRecorder.prepareToRecord()
+        audioRecorder.record()
+        
+        recordButton.enabled = false
+        recordLabel.hidden = false
+        stopButton.hidden = false
     }
     
     @IBAction func didPressStop(sender: UIButton) {
@@ -68,16 +78,20 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
     }
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
-        performSegueWithIdentifier("showPlaySounds", sender: self)
+        if flag {
+            performSegueWithIdentifier("showPlaySounds", sender: self)
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var controller = sender?.destinationViewController as PlaySoundsViewController
+        var controller = segue.destinationViewController as PlaySoundsViewController
         controller.delegate = self
+        let session = AVAudioSession.sharedInstance()
+        session.setActive(false, error: nil)
     }
 
     func playSoundsGetRecordingURL() -> NSURL {
-        return recordingURL
+        return audioRecording.fileURL
     }
 
 }
