@@ -23,7 +23,6 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     @IBOutlet weak var darthButton: UIButton!
     @IBOutlet weak var fastButton: UIButton!
     @IBOutlet weak var slowButton: UIButton!
-    @IBOutlet weak var stopButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,12 +94,10 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         audioEngine.connect(playerNode, to: timePitch, format: audioFile.processingFormat)
         audioEngine.connect(timePitch, to: audioEngine.outputNode, format: audioFile.processingFormat)
         
-        playerNode.scheduleFile(audioFile, atTime: nil) { }
+        playerNode.scheduleFile(audioFile, atTime: nil) {}
         var error = NSErrorPointer()
         audioEngine.startAndReturnError(error)
         playerNode.play()
-        
-
     }
     
     @IBAction func didPressDarth(sender: UIButton) {
@@ -122,5 +119,8 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     
     private func play() {
         audioPlayer.play()
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
     }
 }

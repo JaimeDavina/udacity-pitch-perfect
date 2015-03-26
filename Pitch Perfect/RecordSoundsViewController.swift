@@ -13,7 +13,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
 
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var recordLabel: UILabel!
     
     var audioRecorder: AVAudioRecorder!
     var audioRecording: AudioRecording!
@@ -23,7 +22,8 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
         // Do any additional setup after loading the view, typically from a nib.
         
         recordButton.enabled = true
-        audioRecording = AudioRecording()
+        recordButton.setTitle("Tap to Record", forState: .Normal)
+        recordButton.setTitle("Recording", forState: .Disabled)
     }
     private func setupRecordingSession() {
         let session = AVAudioSession.sharedInstance()
@@ -34,7 +34,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
     override func viewWillAppear(animated: Bool) {
         recordButton.enabled = true
         stopButton.hidden = true
-        recordLabel.hidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -54,14 +53,13 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
             }
 
         } else {
-            
             self.setupRecordingSession()
             self.startRecording()
         }
-    
     }
     
     private func startRecording() {
+        audioRecording = AudioRecording()
         audioRecorder = AVAudioRecorder(URL: audioRecording.fileURL, settings: nil, error: nil)
         
         audioRecorder.delegate = self
@@ -69,7 +67,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
         audioRecorder.record()
         
         recordButton.enabled = false
-        recordLabel.hidden = false
         stopButton.hidden = false
     }
     
