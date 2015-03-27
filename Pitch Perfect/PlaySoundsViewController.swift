@@ -12,7 +12,7 @@ import AVFoundation
 protocol PlaySoundsDelegate {
     func playSoundsGetRecordingURL() -> NSURL
 }
-class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
+class PlaySoundsViewController: UIViewController {
     
     var delegate: PlaySoundsDelegate!
     var audioPlayer: AVAudioPlayer!
@@ -50,7 +50,6 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         var error: NSError?
         let url = delegate.playSoundsGetRecordingURL()
         audioPlayer = AVAudioPlayer(contentsOfURL: url, error: &error)
-        audioPlayer.delegate = self
         audioPlayer.volume = 1
         audioPlayer.enableRate = true
         audioPlayer.prepareToPlay()
@@ -119,8 +118,5 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     
     private func play() {
         audioPlayer.play()
-    }
-    
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
     }
 }
