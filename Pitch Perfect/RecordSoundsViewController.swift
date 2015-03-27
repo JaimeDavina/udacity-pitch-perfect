@@ -59,8 +59,8 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
     }
     
     private func startRecording() {
-        audioRecording = AudioRecording()
-        audioRecorder = AVAudioRecorder(URL: audioRecording.fileURL, settings: nil, error: nil)
+        audioRecording = AudioRecording(fileUrl: AudioRecording.getDefaultURL()!, fileTitle: "Title")
+        audioRecorder = AVAudioRecorder(URL: audioRecording.url, settings: nil, error: nil)
         
         audioRecorder.delegate = self
         audioRecorder.prepareToRecord()
@@ -87,8 +87,11 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate, Pla
         session.setActive(false, error: nil)
     }
 
+    /** 
+    Using a delegate pattern here allows the controller that invoked the play sounds controller to specify the sound to play. This makes the play sounds controller more reusable compared to creating a dependency on the model to provide the sound url.
+    */
     func playSoundsGetRecordingURL() -> NSURL {
-        return audioRecording.fileURL
+        return audioRecording.url
     }
 
 }

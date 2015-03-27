@@ -9,17 +9,22 @@
 import Foundation
 
 class AudioRecording {
-    let basePath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-    var fileURL = NSURL()
+    var url = NSURL()
+    var title = "I am never used anywhere."
     
-    init() {
+    init(fileUrl: NSURL, fileTitle: String) {
+        url = fileUrl
+        title = fileTitle
+    }
+    
+    class func getDefaultURL() -> NSURL? {
+        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         let currentDateTime = NSDate()
         let formatter = NSDateFormatter()
         formatter.dateFormat = "ddMMyyyy-HHmmss"
-        let recordingName = formatter.stringFromDate(currentDateTime)+".wav"
-        let pathArray = [basePath, recordingName]
-        if let url = NSURL.fileURLWithPathComponents(pathArray) {
-            fileURL = url
-        }
+        let name = formatter.stringFromDate(currentDateTime) + ".wav"
+        let pathArray = [path, name]
+        return NSURL.fileURLWithPathComponents(pathArray)
     }
+   
 }
